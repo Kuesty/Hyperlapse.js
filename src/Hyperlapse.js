@@ -140,7 +140,9 @@ var Hyperlapse = function(container, params) {
 		_ctime = Date.now(),
 		_ptime = 0, _dtime = 0,
 		_prev_pano_id = null,
-		_raw_points = [], _h_points = [];
+		_raw_points = [], _h_points = [],
+    _loop = true;
+     
 
 	/**
 	 * @event Hyperlapse#onError
@@ -155,7 +157,13 @@ var Hyperlapse = function(container, params) {
  	 * @param {Number} e.position
  	 * @param {HyperlapsePoint} e.point
 	 */
-	var handleFrame = function (e) { if (self.onFrame) self.onFrame(e); };
+	var handleFrame = function (e) { 
+    console.log(self.length());
+    if (!self._loop && e.position==(self.length()- 1) ) {
+      self.pause();
+    }
+    if (self.onFrame) self.onFrame(e); 
+  };
 
 	/**
 	 * @event Hyperlapse#onPlay
@@ -710,6 +718,7 @@ var Hyperlapse = function(container, params) {
 			var p = params || {};
 			_distance_between_points = p.distance_between_points || _distance_between_points;
 			_max_points = p.max_points || _max_points;
+      _loop = p.loop == undefined ? true : (p.loop && true);
 
 			if(p.route) {
 				handleDirectionsRoute(p.route);
