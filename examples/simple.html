@@ -33,7 +33,11 @@
       hyperlapse.onLoadProgress = function(e) {
 //        console.log(e.point);  
       }
-     
+    
+      hyperlapse.onRouteFinishingLine = function(e) {
+        console.log("Destination arrived");
+      }
+
 			// Google Maps API stuff here...
 			var directions_service = new google.maps.DirectionsService();
 
