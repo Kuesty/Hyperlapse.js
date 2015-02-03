@@ -160,6 +160,7 @@ var Hyperlapse = function(container, params) {
 	var handleFrame = function (e) { 
     if (!self._loop && e.position==(self.length()- 1) ) {
       self.pause();
+      if (self.onRouteFinishingLine) self.onRouteFinishingLine(e);
     }
     if (self.onFrame) self.onFrame(e); 
   };
